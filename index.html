@@ -182,9 +182,9 @@
                 if (explosionType === "text") {
                     const texts = ["Happy New Year", "Kirari", "2025"];
                     const selectedText = texts[Math.floor(Math.random() * texts.length)];
-                    let fontsize = 100
+                    let fontsize = 50
                     if (selectedText === 'Happy New Year') {
-                        fontsize = 50;
+                        fontsize = 35;
                     }
                     this.createTextParticles(selectedText, fontsize);
                 } else if (explosionType === "greenStar") {
@@ -330,7 +330,7 @@
                 this.speed = speed !== null ? speed : random(1, 10);
                 this.angle = angle !== null ? angle : random(0, Math.PI * 2);
                 this.gravity = 0.05;
-                this.friction = 0.98;
+                this.friction = 0.88;
                 this.opacity = 1;
                 this.done = false;
                 this.vx = Math.cos(this.angle) * this.speed;
@@ -347,7 +347,7 @@
                     this.history.shift();
                 }
 
-                const wind = 0.002;
+                const wind = 0.004;
                 this.vx += wind * (Math.random() - 0.5);
 
                 this.vx *= this.friction;
@@ -373,7 +373,7 @@
                     ctx.moveTo(this.x, this.y);
                 }
                 ctx.strokeStyle = this.color;
-                ctx.lineWidth = 0.5;
+                ctx.lineWidth = 0.3;
                 ctx.stroke();
                 ctx.closePath();
                 ctx.restore();
