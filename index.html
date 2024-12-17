@@ -127,7 +127,7 @@
             update() {
                 if (!this.exploded) {
                     this.vy += this.gravity;
-                    this.x += this.vx + random(-0.5, 0.5);
+                    this.x += this.vx + random(-0.3, 0.2);
                     this.y += this.vy;
 
                     this.history.push({ x: this.x, y: this.y });
@@ -289,7 +289,7 @@
             draw() {
                 if (!this.exploded) {
                     ctx.save();
-                    ctx.globalAlpha = 0.5;
+                    ctx.globalAlpha = 0.3;
                     this.history.forEach((point) => {
                         ctx.beginPath();
                         ctx.arc(point.x, point.y, 2, 0, Math.PI * 2);
@@ -364,7 +364,7 @@
 
             draw() {
                 ctx.save();
-                ctx.globalAlpha = this.opacity * 0.5;
+                ctx.globalAlpha = this.opacity * 0.2;
                 ctx.beginPath();
                 if (this.history.length > 0) {
                     ctx.moveTo(this.history[0].x, this.history[0].y);
@@ -373,14 +373,14 @@
                     ctx.moveTo(this.x, this.y);
                 }
                 ctx.strokeStyle = this.color;
-                ctx.lineWidth = 0.3;
+                ctx.lineWidth = 0.1;
                 ctx.stroke();
                 ctx.closePath();
                 ctx.restore();
 
                 ctx.save();
                 ctx.globalAlpha = this.opacity;
-                ctx.shadowBlur = 5;
+                ctx.shadowBlur = 2;
                 ctx.shadowColor = this.color;
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
@@ -395,20 +395,20 @@
 
         const stars = [];
 
-        const starCount = 100;
+        const starCount = 25;
         for (let i = 0; i < starCount; i++) {
             stars.push(new Star());
         }
 
         let lastTextExplosionTime = 0;
-        const textExplosionInterval = 5000;
+        const textExplosionInterval = 3000;
 
         const createFirework = (isTextFirework = false, text = "") => {
             fireworks.push(new Firework(isTextFirework, text));
         };
 
-        for (let i = 0; i < 3; i++) {
-            setTimeout(() => createFirework(), i * 1000);
+        for (let i = 0; i < 2; i++) {
+            setTimeout(() => createFirework(), i * 800);
         }
 
         const drawBackground = () => {
@@ -440,7 +440,7 @@
             fireworks.forEach((firework) => firework.update());
             fireworks.forEach((firework) => firework.draw());
 
-            if (Math.random() < 0.03) {
+            if (Math.random() < 0.018) {
                 createFirework();
             }
 
