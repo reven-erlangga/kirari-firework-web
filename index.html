@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
-    <title>Document</title>
+    <title>Happy New Year</title>
 </head>
 
 <style>
@@ -66,8 +66,8 @@
             reset() {
                 this.x = random(0, canvas.width);
                 this.y = random(0, canvas.height);
-                this.size = random(0.5, 1.5);
-                this.baseAlpha = random(0.3, 0.8);
+                this.size = random(0.5, 0.8);
+                this.baseAlpha = random(0.4, 0.8);
                 this.alpha = this.baseAlpha;
                 this.twinkleSpeed = random(0.005, 0.02);
                 this.twinkleDirection = Math.random() < 0.5 ? 1 : -1;
@@ -104,7 +104,10 @@
             }
 
             reset() {
-                this.x = random(100, canvas.width - 100);
+                // clear the whole canvas
+                // c.clearRect(0, 0, canvas.width, canvas.height);
+
+                this.x = random(20, canvas.width - 100);
                 this.y = canvas.height;
                 this.speed = this.isTextFirework ? random(4, 6) : random(3, 7);
                 const angle = random((-5 * Math.PI) / 12, (-7 * Math.PI) / 12);
@@ -120,7 +123,7 @@
                     ? random(canvas.height / 3, canvas.height / 2.5)
                     : random(canvas.height / 4, canvas.height / 2);
                 this.history = [];
-                this.maxHistory = 15;
+                this.maxHistory = 25;
                 this.done = false;
             }
 
@@ -152,15 +155,8 @@
             explode() {
                 let explosionType;
 
-                if (
-                    (this.hue >= 0 && this.hue <= 30) ||
-                    (this.hue >= 330 && this.hue <= 360)
-                ) {
-                    explosionType = "heart";
-                } else if (this.hue >= 150 && this.hue <= 240) {
+                if (this.hue >= 150 && this.hue <= 240) {
                     explosionType = "text";
-                } else if (this.hue >= 120 && this.hue <= 180) {
-                    explosionType = "curve";
                 } else if (this.hue >= 90 && this.hue <= 150) {
                     explosionType = "greenStar";
                 } else {
@@ -171,20 +167,20 @@
                     round: { count: Math.floor(random(80, 120)), angleOffset: 0 },
                     star: { count: 50, angleOffset: Math.PI / 5 },
                     heart: { count: 100, angleOffset: 0 },
-                    text: { count: 150, angleOffset: 0 },
+                    text: { count: 100, angleOffset: 0 },
                     greenStar: { count: 100, angleOffset: 0 }
                 };
 
                 const { count: particleCount, angleOffset } = particleCountMap[
                     explosionType
-                ] || { count: 100, angleOffset: 0 };
+                ] || { count: 50, angleOffset: 0 };
 
                 if (explosionType === "text") {
                     const texts = ["Happy New Year", "Kirari", "2025"];
                     const selectedText = texts[Math.floor(Math.random() * texts.length)];
-                    let fontsize = 50
+                    let fontsize = 45;
                     if (selectedText === 'Happy New Year') {
-                        fontsize = 35;
+                        fontsize = 30;
                     }
                     this.createTextParticles(selectedText, fontsize);
                 } else if (explosionType === "greenStar") {
@@ -192,7 +188,7 @@
                 } else {
                     for (let i = 0; i < particleCount; i++) {
                         let angle;
-                        let speed = random(1, 10);
+                        let speed = random(1, 5);
                         if (explosionType === "round") {
                             angle = random(0, Math.PI * 2);
                         } else if (explosionType === "star") {
@@ -231,7 +227,7 @@
 
                 const textMetrics = tempCtx.measureText(text);
                 tempCanvas.width = textMetrics.width;
-                tempCanvas.height = fontSize * 1.2;
+                tempCanvas.height = fontSize * 0.8;
 
                 tempCtx.font = `${fontSize}px Arial`;
                 tempCtx.fillStyle = "white";
@@ -245,7 +241,7 @@
                     tempCanvas.height
                 ).data;
 
-                const density = 4;
+                const density = 2;
                 for (let y = 0; y < tempCanvas.height; y += density) {
                     for (let x = 0; x < tempCanvas.width; x += density) {
                         const index = (y * tempCanvas.width + x) * 4;
@@ -303,7 +299,7 @@
                     ctx.shadowBlur = 10;
                     ctx.shadowColor = this.color;
                     ctx.beginPath();
-                    ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+                    ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
                     ctx.fillStyle = this.color;
                     ctx.fill();
                     ctx.closePath();
